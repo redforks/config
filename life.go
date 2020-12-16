@@ -3,9 +3,6 @@ package config
 import (
 	"fmt"
 	"log"
-	"os"
-	"os/signal"
-	"syscall"
 
 	"github.com/redforks/hal"
 	"github.com/redforks/life"
@@ -35,15 +32,6 @@ func start() {
 	go monitorSignal()
 	if err := Load(""); err != nil {
 		log.Panic(err)
-	}
-}
-
-// monitor USR1 signal to reload config and apply
-func monitorSignal() {
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGUSR1)
-	for range c {
-		Reload()
 	}
 }
 
